@@ -14,16 +14,22 @@ export const createUser = async ({ username, email, password }) => {
 };
 
 // Reg Validate
-const schema = Joi.object({
+const LoginSchema = Joi.object({
+  email: Joi.string()
+    .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+    .required()
+    .messages({
+      "string.empty": "Email is required",
+      "string.pattern.base": "Email must be valid",
+    }),
   password: Joi.string()
-    .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}$"))
+    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).{8,}$/)
     .required()
     .messages({
       "string.empty": "Password is required",
-      "string.pattern.base": "Password must be at least 6 characters and include uppercase, lowercase, and number",
+      "string.pattern.base": "Password must be at least 8 characters and include uppercase, lowercase, number, and special character",
     }),
-});
-
+})
 // joi validate
 
 // export const validateLogin = (data) => {
